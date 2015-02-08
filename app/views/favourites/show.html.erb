@@ -1,0 +1,3 @@
+<% Project.find(current_user.favourites.map(&:project_id)).each do |project| %> 
+  <%= link_to project.title, project_path(@project) %>
+<% end %>

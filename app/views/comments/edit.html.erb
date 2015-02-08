@@ -1,0 +1,7 @@
+<div class="container">
+ <%= form_for @comment, url: project_discussion_comment_path(@project, @discussion, @comment) do |f| %>
+    <%= f.label :body %>
+    <%= f.text_field :body, class:"form-control" %><br>
+    <%= f.submit class: "btn btn-info btn-sm" %>
+  <% end %>
+</div>

@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>My Favourited Projects</h1>
+  <p>lets get to work!!</p>
+  <hr>
+</div>
+
+<div class="container">
+<% @projects.each do |project| %> 
+  <h3><%= link_to project.title, project_path(project) %></h3>
+  <p>Title:<%= project.title %></p>
+  <p>Description:<%= project.description %></p>
+  <p>Due:<%= project.due_date %></p>
+  <hr>
+<% end %>
+</div>

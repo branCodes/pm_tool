@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Edit Task</h1>
+  <p>Let's shake things up a bit</p>
+</div>
+
+<div class="container">
+  <%= form_for [@project, @task] do |f| %>
+    <%= f.label :title %>
+    <%= f.text_area :title, class:"form-control" %><br>
+    <%= f.label :due_date %>
+    <%= f.date_field :due_date, class:"form-control"%><br>
+    <%= f.submit class: "btn btn-info btn-sm" %>
+  <% end %>
+</div>

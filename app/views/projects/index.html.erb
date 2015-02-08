@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>My Projects</h1>
+  <p>lets get to work!!</p>
+  <hr>
+</div>
+
+<div class="container">
+<%= form_tag(projects_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search Projects", class: "form-control" %><br>
+  <%= submit_tag "Search", :title => nil, class: "btn btn-primary btn-lg" %>
+<% end %>
+</div>
+
+<div class="container">
+  <% @projects.each do |f| %>
+    <h3><%= link_to f.title, project_path(f) %></h3>
+    <p>Title:<%= f.title %></p>
+    <p>Description:<%= f.description %></p>
+    <p>Due:<%= f.due_date %></p>
+    <hr>
+  <% end %>
+</div>  

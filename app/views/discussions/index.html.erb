@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Discussions for <%= @project.title %></h2>
+</div>
+
+<div class="container">
+  <% @project.discussions.each do |discussion| %>
+    <h3>Title: <%= link_to discussion.title, project_discussion_path(@project, discussion) %></h3>
+    <p>Description:<%= discussion.description %></p>
+    <%= link_to "Edit Discussion", edit_project_discussion_path(@project, discussion), class: "btn btn-primary btn-xs" %>
+    <%= link_to "Abolish Discussion",
+    project_discussion_path(@project, discussion), method: :delete, data: {
+      confirm: "Are you sure you wish to abolish this discussion?"}, class: "btn btn-danger btn-xs" %>
+  <% end %>
+</div>
+
+<br>
+
+<div class="container">
+  <h4>Start a New Discussion for: <%= @project.title %></h4>
+  <%= form_for [@project, @discussion] do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title, class:"form-control" %><br>
+    <%= f.label :description %>
+    <%= f.text_field :description, class:"form-control"%><br>
+    <%= f.submit class: "btn btn-info btn-md" %>
+  <% end %>
+</div>
+
+ 

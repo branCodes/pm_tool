@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>Tasks for: <%= @project.title %></h2>
+  <div class="well">
+    <% @tasks.each do |task| %>
+    <h5><%= task.title %></h5>
+    <p>Complete By:<%= task.due_date %></p>
+    <p>Created By: <%= task.user.first_name %></p>
+    <%= link_to "Edit Task", edit_project_task_path(@project, task), class: "btn btn-primary btn-xs" %>
+    <%= link_to "Abolish Task",
+    project_task_path(@project, task), method: :delete, data: {
+      confirm: "Are you sure you wish to abolish this task?"}, class: "btn btn-danger btn-xs" %>
+      <% if task.status == true %>
+        <%= link_to "Done", toggle_task_status_path(task), method: :patch, class: "btn btn-success btn-xs" %>
+      <% elsif task.status == false %>
+        <%= link_to "Not Done", toggle_task_status_path(task), method: :patch, class: "btn btn-warning btn-xs" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <h2>Add New Task</h2>
+  <% if @task.errors.any? %>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form_for @task, url: project_tasks_path(@project) do |f| %>
+    <%= f.label :title %>
+    <%= f.text_area :title, class:"form-control" %><br>
+    <%= f.label :due_date %>
+    <%= f.date_field :due_date %>
+    <%= f.submit class: "btn btn-info btn-sm" %>
+  <% end %>
+</div>
+<br>
+<br>
+<hr>
+

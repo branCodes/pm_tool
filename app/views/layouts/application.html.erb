@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mgmt</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+ <div class="container">
+  <a href="/">Home</a>
+  |
+  <a href="/about">About Us</a>
+  |
+  <a href="/projects/new">New Project</a>
+  |
+  <a href="/projects">All Projects</a>
+  |
+  <a href="/projects/favourites">Favourited Projects</a>
+  |
+  <% if user_signed_in? %>
+    <%= link_to "Account Settings", edit_user_registration_path %>
+    |
+    Hello <%= current_user.first_name %>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Sign In", new_user_session_path %>
+  |
+    <%= link_to "Sign Up", new_user_registration_path %>
+  <% end %>
+  |
+  <hr>
+  <%= flash[:notice] || flash[:error] %>
+  <hr>
+  <%= yield %>
+</div>
+</body>
+</html>
+
+ 

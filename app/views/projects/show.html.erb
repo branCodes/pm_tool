@@ -1,0 +1,48 @@
+<div class="container">
+  <h1><%= @project.title %></h1>
+  <p> don't stop now.. </p>
+</div>
+
+<div class="container">
+  <p><strong>Description: </strong><%= @project.description %></p>
+  <p><strong>Complete By: </strong><%= @project.due_date %></p>
+  <p><strong>Created By: </strong><%= @project.user.first_name %></p>
+  <p><strong>Members: </strong>
+  <p><%= User.find( @project.memberships.map(&:user_id) ).map(&:first_name).join(', ') %></p>
+  <p><strong>Tags:</strong></p>
+    <p><%= @project.tags.map(&:title).join(", ") %></p>
+  <%= link_to "View Discussions", project_discussions_path(@project, @discussion), class: "btn btn-primary btn-lg" %><br><br>
+  <%= link_to "Edit Project?", edit_project_path, class: "btn btn-primary btn-xs" %>
+  <%= link_to "Scrap Project?!", project_path(@project),
+  method: :delete,
+  data: {confirm: "Are you sure you wish to scrap your project?! This is your last chance man.."}, class: "btn btn-danger btn-xs"  %>
+  <% if @project.user_id != current_user.id %> 
+    <% if @favourite %>
+      <%= link_to "Add To Favourites", project_favourite_path(@project, @favourite), method: :delete, class: "btn btn-info btn-xs" %>
+    <% else %>
+      <%= link_to "Favourited", project_favourites_path(@project), method: :post, class: "btn btn-success btn-xs" %>
+    <% end %>
+  <% else %>
+    <p>You created this project! You cannot favourite it.</p>
+  <% end %>  
+</div>
+
+<hr>
+
+<div class="container" id="task-container">
+  <%= render 'task_project' %>
+</div>
+
+<div class="container">
+  <h2>Start a New Discussion for: <%= @project.title %></h2>
+  <%= form_for [@project, @discussion] do |f| %>
+    <%= f.label :title %>
+    <%= f.text_area :title, class:"form-control" %><br>
+    <%= f.label :description %>
+    <%= f.text_field :description, class:"form-control"%><br>
+    <%= f.submit class: "btn btn-info btn-md" %>
+    <%= link_to "View Discussions", project_discussions_path(@project, @discussion), class: "btn btn-primary btn-md" %>
+  <br>
+  <br>
+  <% end %>
+</div>
