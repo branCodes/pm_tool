@@ -14,8 +14,7 @@ class Project < ActiveRecord::Base
   has_many :favourited_users, through: :favourites, source: :user
   
   def self.search(query)
-    where("title ilike ?", "%#{query}%") 
-    where("description ilike ?", "%#{query}%") 
+    where("title ilike ? OR description ilike ?", "%#{query}%", "%#{query}%") 
   end
 end
 
