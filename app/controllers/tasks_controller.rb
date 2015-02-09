@@ -58,8 +58,10 @@ class TasksController < ApplicationController
   def destroy
     @project = Project.find params[:project_id]
     @task = Task.find params[:id]
-    @task.destroy
-    redirect_to project_path(@project), notice: "Task Abolished!"
+    if @task.destroy
+      respond_with ()
+    end
+    #redirect_to project_path(@project), notice: "Task Abolished!"
   end
 
   def task_params
