@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  respond_to :js
 
   def index
     @task = Task.order(:status)
@@ -15,9 +16,11 @@ class TasksController < ApplicationController
     @task.status = false
     @task.user = current_user
     if @task.save
-      redirect_to @project, notice: "Task created successfully!"
+      respond_with ()
+      #redirect_to @project, notice: "Task created successfully!"
     else
-      redirect_to @project, notice: "Error in creating your task!"
+      respond_with ()
+      #redirect_to @project, notice: "Error in creating your task!"
     end
   end
 
