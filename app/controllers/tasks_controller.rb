@@ -52,7 +52,8 @@ class TasksController < ApplicationController
       @task.status = false
     end
     @task.save
-    redirect_to project_path(@task.project_id)
+    respond_with ()
+    #redirect_to project_path(@task.project_id)
   end
 
   def destroy
