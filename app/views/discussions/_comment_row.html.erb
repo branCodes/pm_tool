@@ -1,0 +1,5 @@
+     <h3><%= comment.body %></h3>
+      <h5><%= comment.created_at %></h5>
+      <h5>Posted By: <%= comment.user.first_name %></h5>
+      <%= link_to "Edit Comment", edit_project_discussion_comment_path(@project, @discussion, comment), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Abolish Comment", project_discussion_comment_path(@project, @discussion, comment), method: :delete, class: "btn btn-danger btn-xs" %>
