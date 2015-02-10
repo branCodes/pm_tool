@@ -33,10 +33,14 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @project = Project.find params[:project_id]
     @discussion = Discussion.find params[:discussion_id]
     @comment = Comment.find params[:id]
-    @comment.destroy
-    redirect_to project_discussion_path(@discussion.project, @discussion), notice: "Comment Abolished!"
+    if @comment.destroy
+      respond_with ()
+    else #redirect_to project_discussion_path(@discussion.project, @discussion), notice: "Comment Abolished!"
+      respond_with ()
+    end
   end
 
   def edit

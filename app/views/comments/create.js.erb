@@ -1,2 +1,2 @@
-$('#comment_title').val('')
-$('.well').prepend("<%= j render partial: '/discussions/comment_row', locals: {comment: @comment} %>");
+$('#comment_body').val('')
+$('.well').append("<%= j render partial: '/discussions/comment_row', locals: {comment: @comment} %>");
