@@ -1,11 +1,28 @@
-<div class="container">
-  <h2>Tasks for: <%= @project.title %></h2>
-  <div class="well class-well">
-    <% @tasks.each do |task| %>
-      <%= render partial: 'projects/task_row', locals: { task: task } %>
-    <% end %>
+ 
+  <div class="container">
+    <div class="row">  
+      <div class="col-md-6">
+        <h2>Incomplete Tasks for: <%= @project.title %></h2>
+        <div class="class-well">
+          <% @tasks.each do |task| %>
+            <% if task.status == false %>
+              <%= render partial: 'projects/task_row', locals: { task: task } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-6"> 
+        <h2>Complete Tasks for: <%= @project.title %></h2>
+        <div class="class-well">
+          <% @tasks.each do |task| %>
+            <% if task.status == true %>
+              <%= render partial: 'projects/task_row', locals: { task: task } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
 <div class="container">
   <h2>Add New Task</h2>
