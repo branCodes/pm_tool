@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index]
   
   def new
     @project = Project.new
@@ -48,7 +48,7 @@ class ProjectsController < ApplicationController
     @projects = Project.order params[:title]
     @task = Task.new
     @discussion = Discussion.new
-    @tasks = @project.tasks.order(:status)
+    @tasks = @project.tasks.order(:created_at)
     @favourite = current_user.favourite_for(@project)
   end
 
