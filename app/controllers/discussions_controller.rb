@@ -9,16 +9,20 @@ class DiscussionsController < ApplicationController
     @discussion = Discussion.new discussion_params
     @discussion.project = @project
     @discussion.user = current_user
-    @discussion.save
-    # @project.discussions.create(discussion_params)
-    redirect_to project_discussions_path(@project), notice: "Discussion created successfully"
+    if @discussion.save
+      redirect_to project_discussions_path(@project), notice: "Discussion created successfully!"
+    else 
+      redirect_to project_discussions_path(@project), alert: "Unable to create discussion"
+    end 
   end
 
   def update
     @project = Project.find params[:project_id]
     @discussion = @project.discussions.find params[:id]
     if @discussion.update discussion_params
-      redirect_to project_discussions_path(@project), notice: "Discussion edited successfully"
+      redirect_to project_discussions_path(@project), notice: "Discussion edited successfully!"
+    else 
+      redirect_to project_discussions_path(@project), alert: "Unable to edit discussion"
     end
   end
 
@@ -30,8 +34,11 @@ class DiscussionsController < ApplicationController
   def destroy
     @project = Project.find params[:project_id]
     @discussion = Discussion.find params[:id]
-    @discussion.destroy
-    redirect_to project_discussions_path(@project), notice: "Discussion deleted!"
+    if @discussion.destroy
+      redirect_to project_discussions_path(@project), notice: "Discussion deleted!"
+    else
+      redirect_to project_discussions_path(@project), notice: "Unable to delete discussion"
+    end
   end
 
   def index

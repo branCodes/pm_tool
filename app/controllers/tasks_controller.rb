@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  respond_to :js
+  respond_to :js, :html
 
   def index
     @task = Task.order(:status)
