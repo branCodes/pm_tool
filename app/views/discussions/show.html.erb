@@ -3,7 +3,7 @@
   <h4>Description: <%= @discussion.description %></h4>
   <div class="well">
     <% @discussion.comments.each do |comment| %>
-   <%= render partial: 'discussions/comment_row', locals: { comment: comment } %>
+      <%= render partial: 'comments/comment_row', locals: { comment: comment } %>
     <% end %>
   </div>
 </div>

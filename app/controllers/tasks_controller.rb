@@ -1,31 +1,17 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  respond_to :js
+  respond_to :js, :html
 
   def index
     @task = Task.order(:status)
   end
 
-  def new
-    @task = Task.new 
-  end
-
-  def create
-    @project = Project.find params[:project_id]
-    @task = @project.tasks.new(task_params)
-    @task.status = false
-    @task.user = current_user
-    if @task.save
-      respond_with ()
-      #redirect_to @project, notice: "Task created successfully!"
-    else
-      respond_with ()
-      #redirect_to @project, notice: "Error in creating your task!"
-    end
-  end
-
   def show
     @task = Task.find params[:id]
+  end
+
+  def new
+    @task = Task.new 
   end
 
   def edit
@@ -33,11 +19,38 @@ class TasksController < ApplicationController
     @task = Task.find params[:id]
   end
 
+  def create
+    @project = Project.find params[:project_id]
+    @task = @project.tasks.new task_params
+    @task.status = false
+    @task.user = current_user
+    if @task.save
+      respond_with ()
+      #redirect_to @project, notice: "Task created successfully!"
+    else
+      respond_with ()
+      #redirect_to @project, alert: "Error in creating your task"
+    end
+  end
+
   def update
     @project = Project.find params[:project_id]
     @task = @project.tasks.find params[:id]
     if @task.update task_params
-    redirect_to project_path(@project), notice: "Task edited successfully!"
+      redirect_to project_path(@project), notice: "Task edited successfully!"
+    else
+      redirect_to project_path(@project), alert: "Unable to edit task"
+    end
+  end
+
+  def destroy
+    @project = Project.find params[:project_id]
+    @task = Task.find params[:id]
+    if @task.destroy
+      respond_with ()
+      #redirect_to project_path(@project), notice: "Task Abolished!"
+    else
+      respond with ()
     end
   end
 
@@ -56,16 +69,7 @@ class TasksController < ApplicationController
     #redirect_to project_path(@task.project_id)
   end
 
-  def destroy
-    @project = Project.find params[:project_id]
-    @task = Task.find params[:id]
-    if @task.destroy
-      respond_with ()
-      #redirect_to project_path(@project), notice: "Task Abolished!"
-    else
-      respond with ()
-    end
-  end
+  private
 
   def task_params
     params.require(:task).permit([:title, :due_date])
