@@ -1,7 +1,27 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+  
+  def index
+    @project = Project.find params[:project_id]
+    # @discussions = @project.discussions
+    @discussion = Discussion.new
+    @discussion.user = current_user
+  end
+
+  def show
+    @project = Project.find params[:project_id]
+    @discussion = @project.discussions.find params[:id]
+    @comment = Comment.new
+    @comment.user = current_user
+  end
+
   def new
     @discussion = Discussion.new
+  end
+
+  def edit
+    @project = Project.find params[:project_id]
+    @discussion = Discussion.find params[:id]
   end
 
   def create
@@ -26,11 +46,6 @@ class DiscussionsController < ApplicationController
     end
   end
 
-  def edit
-    @project = Project.find params[:project_id]
-    @discussion = Discussion.find params[:id]
-  end
-
   def destroy
     @project = Project.find params[:project_id]
     @discussion = Discussion.find params[:id]
@@ -41,19 +56,7 @@ class DiscussionsController < ApplicationController
     end
   end
 
-  def index
-    @project = Project.find params[:project_id]
-    # @discussions = @project.discussions
-    @discussion = Discussion.new
-    @discussion.user = current_user
-  end
-
-  def show
-    @project = Project.find params[:project_id]
-    @discussion = @project.discussions.find params[:id]
-    @comment = Comment.new
-    @comment.user = current_user
-  end
+  private
 
   def discussion_params
     params.require(:discussion).permit(:title, :description, :user_id)
